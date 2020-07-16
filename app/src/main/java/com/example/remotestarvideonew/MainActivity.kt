@@ -5,17 +5,21 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.Button
+import androidx.annotation.NonNull
+import androidx.annotation.VisibleForTesting
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.test.espresso.IdlingResource
 import com.facebook.shimmer.ShimmerFrameLayout
 import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() , SwipeRefreshLayout.OnRefreshListener{
 
+    private var mIdlingResource: RetrofitIdlingResource? = null
     private var viewModel: ViewModel? = null
     private var recyclerView: RecyclerView? = null
     private var allVideos: ArrayList<Video>? = ArrayList()
@@ -29,6 +33,11 @@ class MainActivity : AppCompatActivity() , SwipeRefreshLayout.OnRefreshListener{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        getIdlingResource()
+        if(mIdlingResource != null) {
+            mIdlingResource!!.setIdleState(false)
+        }
+        
         swipeRefreshLayout = findViewById(R.id.swipe_layout)
         swipeRefreshLayout!!.setOnRefreshListener(this);
         swipeRefreshLayout!!.visibility = View.GONE
@@ -98,6 +107,15 @@ class MainActivity : AppCompatActivity() , SwipeRefreshLayout.OnRefreshListener{
         shimmerFrameLayout!!.startShimmerAnimation()
         errorOuterLayout!!.visibility = View.GONE
         viewModel!!.fetchVideos(cahceControl)
+    }
+
+    @VisibleForTesting
+    @NonNull
+    fun getIdlingResource(): IdlingResource {
+        if (mIdlingResource == null) {
+            mIdlingResource = RetrofitIdlingResource()
+        }
+        return mIdlingResource!!
     }
 
 }
