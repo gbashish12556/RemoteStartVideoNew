@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import androidx.annotation.NonNull
 import androidx.annotation.VisibleForTesting
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.test.espresso.IdlingResource
+import butterknife.BindView
 import com.facebook.shimmer.ShimmerFrameLayout
 import java.util.ArrayList
 
@@ -21,12 +23,16 @@ class MainActivity : AppCompatActivity() , SwipeRefreshLayout.OnRefreshListener{
 
     private var mIdlingResource: RetrofitIdlingResource? = null
     private var viewModel: ViewModel? = null
-    private var recyclerView: RecyclerView? = null
+
     private var allVideos: ArrayList<Video>? = ArrayList()
-    private var shimmerFrameLayout: ShimmerFrameLayout? = null
-    private var swipeRefreshLayout: SwipeRefreshLayout? = null
-    private var errorOuterLayout: ConstraintLayout? = null
-    private var retryButton: Button? = null
+
+    @BindView(R.id.recyclerView) lateinit var recyclerView: RecyclerView
+    @BindView(R.id.shimmer_view_container) lateinit var shimmerFrameLayout: ShimmerFrameLayout
+    @BindView(R.id.swipe_layout) lateinit var swipeRefreshLayout: SwipeRefreshLayout
+
+    @BindView(R.id.errorOuterLayout) lateinit var errorOuterLayout: ConstraintLayout
+    @BindView(R.id.retryButton) lateinit var retryButton: Button
+
     private var noteAdapter:ContactsRecyclerViewAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +43,7 @@ class MainActivity : AppCompatActivity() , SwipeRefreshLayout.OnRefreshListener{
         if(mIdlingResource != null) {
             mIdlingResource!!.setIdleState(false)
         }
-        
+
         swipeRefreshLayout = findViewById(R.id.swipe_layout)
         swipeRefreshLayout!!.setOnRefreshListener(this);
         swipeRefreshLayout!!.visibility = View.GONE
@@ -46,7 +52,7 @@ class MainActivity : AppCompatActivity() , SwipeRefreshLayout.OnRefreshListener{
         retryButton = findViewById(R.id.retryButton)
         retryButton!!.setOnClickListener{
 
-//            fetchAgain(null)
+            fetchAgain(null)
         }
 
         shimmerFrameLayout = findViewById(R.id.shimmer_view_container)

@@ -9,7 +9,7 @@ import org.junit.Rule
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-public class MainActivityTest {
+class MainActivityTest {
 
     private val TAG = "EpisodeActivityScreenTest"
     private var mIdlingResource: IdlingResource? = null
