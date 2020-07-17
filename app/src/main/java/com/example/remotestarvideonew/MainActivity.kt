@@ -90,11 +90,13 @@ class MainActivity : AppCompatActivity() , SwipeRefreshLayout.OnRefreshListener{
     }
 
     fun apiFailed(){
-        shimmerFrameLayout!!.stopShimmerAnimation()
+        if(mIdlingResource == null) { shimmerFrameLayout!!.stopShimmerAnimation()
+           swipeRefreshLayout!!.setRefreshing(false);
+        }
         shimmerFrameLayout!!.visibility = View.GONE
-        swipeRefreshLayout!!.setRefreshing(false);
         swipeRefreshLayout!!.visibility = View.GONE
         errorOuterLayout!!.visibility = View.VISIBLE
+        mIdlingResource!!.setIdleState(true)
     }
 
     fun dataRecived(result:ArrayList<Video>){
@@ -109,6 +111,7 @@ class MainActivity : AppCompatActivity() , SwipeRefreshLayout.OnRefreshListener{
     }
 
     fun fetchAgain(cahceControl:String?){
+        mIdlingResource!!.setIdleState(false)
         swipeRefreshLayout!!.visibility = View.GONE
         shimmerFrameLayout!!.visibility = View.VISIBLE
         shimmerFrameLayout!!.startShimmerAnimation()

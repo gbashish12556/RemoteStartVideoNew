@@ -42,6 +42,9 @@ public class MainActivityTest {
     private IdlingResource mIdlingResource;
 
     @Rule
+    public AnimationsRule rule = new AnimationsRule();
+
+    @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class) {
 
         @Override
@@ -76,6 +79,24 @@ public class MainActivityTest {
         onView(withRecyclerView(R.id.recyclerView)
                 .atPositionOnView(0, R.id.description)).check(matches(not(isDisplayed())));
 
+    }
+
+    @Test
+    public void check_if_error_layout_is_visible(){
+        mActivityTestRule.getActivity().runOnUiThread(new Runnable() {
+                                                          public void run() {
+                                                              mActivityTestRule.getActivity().apiFailed();
+                                                          }
+                                                      }
+        );
+        onView(withId(R.id.errorOuterLayout)).check(matches(isDisplayed()));
+
+        //Click on retry button and check if recycler view is visible
+        onView(withId(R.id.retryButton)).perform(click());
+
+        //Check if description section is visible
+        onView(withRecyclerView(R.id.recyclerView)
+                .atPositionOnView(0, R.id.holder)).check(matches(isDisplayed()));
     }
 
 }
