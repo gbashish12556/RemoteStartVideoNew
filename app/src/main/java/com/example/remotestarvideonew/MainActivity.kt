@@ -103,6 +103,7 @@ class MainActivity : AppCompatActivity() , SwipeRefreshLayout.OnRefreshListener{
         shimmerFrameLayout!!.visibility = View.GONE
         swipeRefreshLayout!!.setRefreshing(false);
         swipeRefreshLayout!!.visibility = View.VISIBLE
+        mIdlingResource!!.setIdleState(true)
         noteAdapter!!.setData(result)
 
     }
