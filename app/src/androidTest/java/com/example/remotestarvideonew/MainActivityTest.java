@@ -84,10 +84,10 @@ public class MainActivityTest {
     @Test
     public void check_if_error_layout_is_visible(){
         mActivityTestRule.getActivity().runOnUiThread(new Runnable() {
-                                                          public void run() {
-                                                              mActivityTestRule.getActivity().apiFailed();
-                                                          }
-                                                      }
+                  public void run() {
+                      mActivityTestRule.getActivity().apiFailed();
+                  }
+              }
         );
         onView(withId(R.id.errorOuterLayout)).check(matches(isDisplayed()));
 
