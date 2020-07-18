@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.Button
-import android.widget.ImageView
 import androidx.annotation.NonNull
 import androidx.annotation.VisibleForTesting
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +21,7 @@ import java.util.ArrayList
 class MainActivity : AppCompatActivity() , SwipeRefreshLayout.OnRefreshListener{
 
     private var mIdlingResource: RetrofitIdlingResource? = null
-    private var viewModel: ViewModel? = null
+    private var viewModel: RemoteStarViewModel? = null
 
     private var allVideos: ArrayList<Video>? = ArrayList()
 
@@ -69,7 +68,9 @@ class MainActivity : AppCompatActivity() , SwipeRefreshLayout.OnRefreshListener{
 
     fun intialiseViewModel(){
 
-        viewModel = ViewModelProviders.of(this).get(ViewModel::class.java)
+        var apiService = RetrofitClient.getInstance(this.application).api
+        var viewModelFactory = RemoteStarViewModeFactory(apiService)
+        viewModel = ViewModelProviders.of(this,viewModelFactory).get(RemoteStarViewModel::class.java)
 
         viewModel!!.apiStatus.observe(this, Observer { aBoolean ->
             if (aBoolean == false) {
@@ -82,6 +83,8 @@ class MainActivity : AppCompatActivity() , SwipeRefreshLayout.OnRefreshListener{
                 dataRecived(videos.results!!)
             },1000)
         })
+
+        viewModel!!.fetchVideos(null)
 
     }
 

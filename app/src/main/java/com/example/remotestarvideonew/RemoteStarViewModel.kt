@@ -1,13 +1,18 @@
 package com.example.remotestarvideonew
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
-class ViewModel(application: Application) : AndroidViewModel(application) {
+class RemoteStarViewModel : ViewModel {
 
-    private val apiRepository: ApiRepository
+    constructor(apiService:ApiService) {
+        apiRepository = ApiRepository(apiService)
+    }
 
+    val apiRepository: ApiRepository
 
     val videos: MutableLiveData<VideoResponse>
         get() = apiRepository.allVideos
@@ -17,10 +22,6 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
 
     fun fetchVideos(cacheControl:String?){
         apiRepository.fetchVideos(cacheControl)
-    }
-
-    init {
-        apiRepository = ApiRepository(application)
     }
 
 }

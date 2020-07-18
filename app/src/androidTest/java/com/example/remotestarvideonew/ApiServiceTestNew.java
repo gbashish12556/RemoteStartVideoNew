@@ -69,7 +69,7 @@ public class ApiServiceTestNew {
         // Assign
         MockResponse response = (new MockResponse())
                 .setResponseCode(HttpURLConnection.HTTP_OK)
-                .setBody(getJson("/Users/ashish123/Desktop/RemoteStarVideoNew/app/src/main/assets/retrofit_response.json"));
+                .setBody(TestHelper.getJson(Constants.DUMMY_JSON));
         response.throttleBody(1024, 1, TimeUnit.SECONDS);
         mockWebServer.enqueue(response);
         // Act
@@ -83,15 +83,4 @@ public class ApiServiceTestNew {
 
     }
 
-    String getJson(String path) {
-
-        byte[] content = new byte[0];
-        try {
-            content = Files.readAllBytes(Paths.get(path));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new String(content);
-
-    }
 }

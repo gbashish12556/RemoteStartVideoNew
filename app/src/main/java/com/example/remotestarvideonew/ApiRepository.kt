@@ -1,19 +1,19 @@
 package com.example.remotestarvideonew
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ApiRepository(private val applicationContext:Application){
+class ApiRepository(private val apiService:ApiService){
 
     private val videos = MutableLiveData<VideoResponse>()
     private val status = MutableLiveData<Boolean>()
 
     val allVideos: MutableLiveData<VideoResponse>
         get() {
-            fetchVideos(null)
             return videos
         }
 
@@ -25,13 +25,14 @@ class ApiRepository(private val applicationContext:Application){
 
     fun fetchVideos(cacheControl:String?) {
 
-        val call1 = RetrofitClient.getInstance(applicationContext).api.getVideos(Constants.API_KEY,cacheControl)
+        val call1 = apiService.getVideos(Constants.API_KEY,cacheControl)
         call1.enqueue(object : Callback<VideoResponse> {
 
             override fun onResponse(call: Call<VideoResponse>, response: Response<VideoResponse>) {
                 if (response.code() == 200) {
                     val reponse = response.body()
                     if (reponse.results!!.size > 0) {
+                        status!!.postValue(true)
                         videos.postValue(reponse)
                     } else {
                         status!!.postValue(false)

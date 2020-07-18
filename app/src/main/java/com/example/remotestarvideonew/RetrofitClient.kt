@@ -23,7 +23,7 @@ class RetrofitClient private constructor(context:Application) {
         val myCache = Cache(context.cacheDir, Constants.CACHE_SIZE)
 
         var client = OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS)
-            .cache(myCache)
+//            .cache(myCache)
             .addInterceptor(logging)
             .build()
 
