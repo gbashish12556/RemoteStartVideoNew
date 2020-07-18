@@ -84,18 +84,18 @@ class ContactsRecyclerViewAdapter(private val data: ArrayList<Video>, private va
 
     fun clearViews(holder:ConstraintLayout){
 
-        for(x in constraintLayoutList){
-            if(x.description.isVisible){
-                x.description.visibility = View.GONE
-                constraintLayoutList.remove(x)
-            }
-        }
-
         if(holder.description!!.isVisible!!) {
             constraintLayoutList.remove(holder)
             holder.description.visibility = View.GONE
         }else{
             holder.description.visibility = View.VISIBLE
+        }
+
+        for(x in constraintLayoutList){
+            if(x.description.isVisible){
+                x.description.visibility = View.GONE
+                constraintLayoutList.remove(x)
+            }
         }
 
         constraintLayoutList.add(holder)
