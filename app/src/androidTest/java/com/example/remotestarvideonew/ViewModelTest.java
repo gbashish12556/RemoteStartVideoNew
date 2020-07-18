@@ -1,15 +1,10 @@
 package com.example.remotestarvideonew;
 
-
-import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
-//import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.Observer;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.google.gson.Gson;
 
@@ -28,18 +23,11 @@ import retrofit2.Response;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
 
 @RunWith(AndroidJUnit4.class)
 public class ViewModelTest {
 
-//    @Rule
-//    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     @Mock
     Call<VideoResponse> callResponse;
@@ -67,7 +55,7 @@ public class ViewModelTest {
 
         Call<VideoResponse> mockedCall = (new ApiServiceMock()).getVideos(Constants.API_KEY,null);
 
-        doReturn(callResponse).when(apiService).getVideos(Constants.API_KEY,"no-cache");
+        doReturn(callResponse).when(apiService).getVideos(Constants.API_KEY,Constants.NO_CACHHE);
 
         Mockito.doAnswer(new Answer() {
             @Override
@@ -93,7 +81,7 @@ public class ViewModelTest {
             }
         });
 
-        viewModel.fetchVideos("no-cache");
+        viewModel.fetchVideos(Constants.NO_CACHHE);
 
         //Verify
         VideoResponse finalData = (new Gson()).fromJson(TestHelper.getJson(Constants.DUMMY_JSON),VideoResponse.class);
@@ -108,7 +96,7 @@ public class ViewModelTest {
 
         Call<VideoResponse> mockedCall = (new ApiServiceMock()).getVideos(Constants.API_KEY,null);
 
-        doReturn(callResponse).when(apiService).getVideos(Constants.API_KEY,"no-cache");
+        doReturn(callResponse).when(apiService).getVideos(Constants.API_KEY,Constants.NO_CACHHE);
 
         Mockito.doAnswer(new Answer() {
             @Override
@@ -126,7 +114,7 @@ public class ViewModelTest {
             }
         });
 
-        viewModel.fetchVideos("no-cache");
+        viewModel.fetchVideos(Constants.NO_CACHHE);
 
         verify(apiStatusObserver).onChanged(false);
 

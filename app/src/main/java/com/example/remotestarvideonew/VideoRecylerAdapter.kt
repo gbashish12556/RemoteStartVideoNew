@@ -10,11 +10,13 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.video_recycler_view_list_row.view.*
 import java.util.ArrayList
 
 
 class ContactsRecyclerViewAdapter(private val data: ArrayList<Video>, private val activity: MainActivity) : RecyclerView.Adapter<ContactsRecyclerViewAdapter.ViewHolder>() {
 
+    var constraintLayoutList:MutableList<ConstraintLayout> = mutableListOf();
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.video_recycler_view_list_row, parent, false))
@@ -74,16 +76,30 @@ class ContactsRecyclerViewAdapter(private val data: ArrayList<Video>, private va
             description = itemView.findViewById(R.id.description)
             holder = itemView.findViewById(R.id.holder)
             holder.setOnClickListener{
-                if(description!!.isVisible!!) {
-                    description.visibility = View.GONE
-                }else{
-                    description.visibility = View.VISIBLE
-                }
+                clearViews(holder!!)
             }
 
         }
     }
 
+    fun clearViews(holder:ConstraintLayout){
+
+        for(x in constraintLayoutList){
+            if(x.description.isVisible){
+                x.description.visibility = View.GONE
+                constraintLayoutList.remove(x)
+            }
+        }
+
+        if(holder.description!!.isVisible!!) {
+            constraintLayoutList.remove(holder)
+            holder.description.visibility = View.GONE
+        }else{
+            holder.description.visibility = View.VISIBLE
+        }
+
+        constraintLayoutList.add(holder)
+    }
     fun setData(data: ArrayList<Video>) {
 
         this.data.addAll(data)

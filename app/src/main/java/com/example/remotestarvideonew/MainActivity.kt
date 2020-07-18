@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() , SwipeRefreshLayout.OnRefreshListener{
         retryButton = findViewById(R.id.retryButton)
         retryButton!!.setOnClickListener{
 
-            fetchAgain(null)
+            fetchAgain(Constants.NO_CACHHE)
         }
 
         shimmerFrameLayout = findViewById(R.id.shimmer_view_container)
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() , SwipeRefreshLayout.OnRefreshListener{
     }
 
     override fun onRefresh() {
-        fetchAgain("no-cache")
+        fetchAgain(Constants.NO_CACHHE)
     }
 
     fun apiFailed(){

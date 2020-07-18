@@ -1,6 +1,5 @@
 package com.example.remotestarvideonew
 
-import android.util.Log
 import com.google.gson.Gson
 import okhttp3.Request
 import retrofit2.Call
@@ -19,7 +18,6 @@ class ApiServiceMock : ApiService {
             }
 
             override fun clone(): Call<VideoResponse> {
-                Log.d("ApiServiceMock","clone")
                 return this
             }
 

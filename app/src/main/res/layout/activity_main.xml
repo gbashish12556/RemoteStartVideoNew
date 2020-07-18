@@ -81,7 +81,7 @@
             android:id="@+id/someThingWentWrong"
             android:textSize="24sp"
             android:textColor="#000"
-            android:text="Somethign Went Wrong"
+            android:text="@string/something_went_wrong"
             app:layout_constraintStart_toStartOf="@id/error_image"
             app:layout_constraintEnd_toEndOf="@id/error_image"
             app:layout_constraintTop_toBottomOf="@id/error_image"
@@ -98,7 +98,7 @@
             app:layout_constraintEnd_toEndOf="@id/someThingWentWrong"
             app:layout_constraintTop_toBottomOf="@id/someThingWentWrong"
             android:layout_marginTop="20dp"
-            android:text="We are unable to get data at the mo\n ment please retry now or try again after\n sometime"
+            android:text="@string/error_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

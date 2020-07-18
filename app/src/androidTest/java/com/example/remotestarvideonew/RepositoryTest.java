@@ -13,8 +13,6 @@ import java.io.IOException;
 
 import java.net.HttpURLConnection;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -26,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 @RunWith(AndroidJUnit4.class)
-public class ApiServiceTestNew {
+public class RepositoryTest {
 
 
     private MockWebServer mockWebServer = new MockWebServer();
@@ -65,7 +63,7 @@ public class ApiServiceTestNew {
     }
 
     @Test
-    public void  testAppVersionsNew() {
+    public void  testRetrofitCall_CheckForValidResponse() {
         // Assign
         MockResponse response = (new MockResponse())
                 .setResponseCode(HttpURLConnection.HTTP_OK)
@@ -75,7 +73,7 @@ public class ApiServiceTestNew {
         // Act
         Response<VideoResponse> videoResponse = null;
         try {
-            videoResponse = apiService.getVideos(Constants.API_KEY, null).execute();
+            videoResponse = apiService.getVideos(Constants.API_KEY, Constants.NO_CACHHE).execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
